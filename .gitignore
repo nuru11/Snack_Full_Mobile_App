@@ -1,0 +1,22 @@
+﻿# Root
+.git/
+.DS_Store
+Thumbs.db
+
+# Flutter
+flutter/.dart_tool/
+flutter/.flutter-plugins
+flutter/.flutter-plugins-dependencies
+flutter/.packages
+flutter/build/
+flutter/.idea/
+flutter/*.iml
+
+# Node / backend
+server/node_modules/
+server/.env
+server/*.log
+
+# Editor / temp
+.vscode/
+*.log
