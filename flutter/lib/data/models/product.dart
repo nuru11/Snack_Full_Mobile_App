@@ -33,4 +33,6 @@ class Product {
       isAvailable: ((json['is_available'] as int?) ?? 1) == 1,
     );
   }
+
+  toJson() {}
 }

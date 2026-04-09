@@ -16,6 +16,8 @@ class ProductsController extends GetxController {
   List<Product> get filteredProducts =>
       products.where((p) => p.category == selectedCategory.value).toList();
 
+      
+
   @override
   void onInit() {
     super.onInit();

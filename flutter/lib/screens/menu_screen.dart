@@ -1,9 +1,8 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../core/api_config.dart';
 import '../data/models/product.dart';
 import '../modules/products/products_controller.dart';
 import '../routes/app_routes.dart';
@@ -14,10 +13,10 @@ class MenuScreen extends GetView<ProductsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7FB),
       body: Column(
         children: [
-          const PromoBannerSlider(),
+          // const PromoBannerSlider(),
+            const _AppBar(),
           const _CategoryTabs(),
           Expanded(
             child: Obx(() {
@@ -69,25 +68,102 @@ class MenuScreen extends GetView<ProductsController> {
       ),
     );
   }
+
+
+//   Widget _appBar() {
+//     return  Row(
+//             children: [
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: const [
+//                     Text(
+//                       'Good afternoon',
+//                       style: TextStyle(
+//                         fontSize: 26,
+//                         fontWeight: FontWeight.w800,
+//                         color: Color(0xFF111827),
+//                       ),
+//                     ),
+                    
+//                   ],
+//                 ),
+//               ),
+//               Container(
+//                 width: 46,
+//                 height: 46,
+//                 decoration: BoxDecoration(
+//                   color: Colors.white,
+//                   borderRadius: BorderRadius.circular(14),
+//                   boxShadow: const [
+//                     BoxShadow(
+//                       color: Color(0x14000000),
+//                       blurRadius: 14,
+//                       offset: Offset(0, 6),
+//                     ),
+//                   ],
+//                 ),
+//                 child: const Icon(Icons.notifications_none_rounded),
+//               ),
+//            ],
+//   );
+// }
+
+
+
+}
+
+
+class _AppBar extends StatelessWidget {
+  const _AppBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 54, 16, 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Good afternoon',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF111827),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 46,
+            height: 46,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x14000000),
+                  blurRadius: 14,
+                  offset: Offset(0, 6),
+                ),
+              ],
+            ),
+            child: const Icon(Icons.notifications_none_rounded),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _FoodCard extends StatelessWidget {
   const _FoodCard({required this.product});
 
   final Product product;
-
-  String? get _imageUrl {
-    final raw = product.imageUrl;
-    if (raw == null || raw.isEmpty) return null;
-    if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
-
-    final normalizedBase = ApiConfig.baseUrl.endsWith('/')
-        ? ApiConfig.baseUrl.substring(0, ApiConfig.baseUrl.length - 1)
-        : ApiConfig.baseUrl;
-
-    final normalizedPath = raw.startsWith('/') ? raw : '/$raw';
-    return '$normalizedBase$normalizedPath';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +193,7 @@ class _FoodCard extends StatelessWidget {
                 child: SizedBox(
                   height: 190,
                   width: double.infinity,
-                  child: _FoodCardImage(imageUrl: _imageUrl),
+                  child: _FoodCardImage(imageUrl: product.imageUrl),
                 ),
               ),
               Padding(
@@ -321,18 +397,18 @@ class _FoodCardImage extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(
-          imageUrl!,
+        Image.asset(
+          "assets/product_img/${imageUrl!}",
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => _fallback(),
-          loadingBuilder: (context, child, progress) {
-            if (progress == null) return child;
-            return Container(
-              color: const Color(0xFFFFF1EB),
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            );
-          },
+          // errorBuilder: (_, __, ___) => _fallback(),
+          // loadingBuilder: (context, child, progress) {
+          //   if (progress == null) return child;
+          //   return Container(
+          //     color: const Color(0xFFFFF1EB),
+          //     alignment: Alignment.center,
+          //     child: const CircularProgressIndicator(),
+          //   );
+          // },
         ),
         Container(
           decoration: const BoxDecoration(
@@ -440,46 +516,46 @@ class _PromoBannerSliderState extends State<PromoBannerSlider> {
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Good afternoon',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFF111827),
-                      ),
-                    ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: const [
+          //           Text(
+          //             'Good afternoon',
+          //             style: TextStyle(
+          //               fontSize: 26,
+          //               fontWeight: FontWeight.w800,
+          //               color: Color(0xFF111827),
+          //             ),
+          //           ),
                     
-                  ],
-                ),
-              ),
-              Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x14000000),
-                      blurRadius: 14,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.notifications_none_rounded),
-              ),
-            ],
-          ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       width: 46,
+          //       height: 46,
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(14),
+          //         boxShadow: const [
+          //           BoxShadow(
+          //             color: Color(0x14000000),
+          //             blurRadius: 14,
+          //             offset: Offset(0, 6),
+          //           ),
+          //         ],
+          //       ),
+          //       child: const Icon(Icons.notifications_none_rounded),
+          //     ),
+          //   ],
+          // ),
         
           const SizedBox(height: 18),
           SizedBox(
-            height: 176,
+            height: 100,
             child: PageView.builder(
               controller: _pageController,
               itemCount: _banners.length,
@@ -535,7 +611,7 @@ class _PromoBannerSliderState extends State<PromoBannerSlider> {
                                 banner.title,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
