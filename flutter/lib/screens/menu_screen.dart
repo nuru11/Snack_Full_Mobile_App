@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:learn_flutter/modules/cart/cart_controller.dart';
 
 import '../data/models/product.dart';
 import '../modules/products/products_controller.dart';
@@ -119,6 +120,7 @@ class _AppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Get.find<CartController>();
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 54, 16, 12),
       child: Row(
@@ -138,21 +140,46 @@ class _AppBar extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            width: 46,
-            height: 46,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x14000000),
-                  blurRadius: 14,
-                  offset: Offset(0, 6),
+          Row(
+            children: [
+              Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x14000000),
+                      blurRadius: 14,
+                      offset: Offset(0, 6),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: const Icon(Icons.notifications_none_rounded),
+                child: const Icon(Icons.notifications_none_rounded),
+              ),
+
+              const SizedBox(width: 10),
+              Badge(
+                label: Obx(() => Text(cart.cartItems.length.toString())),
+                child: Container(
+                            width: 46,
+                            height: 46,
+                            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x14000000),
+                    blurRadius: 14,
+                    offset: Offset(0, 6),
+                  ),
+                ],
+                            ),
+                            child: const Icon(Icons.shopping_cart_outlined),
+                          ),
+              ),
+            ],
           ),
         ],
       ),
@@ -167,6 +194,7 @@ class _FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Get.find<CartController>();
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(28),
@@ -283,6 +311,27 @@ class _FoodCard extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
+              ),
+
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE76F51),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: FilledButton(
+                  onPressed: () => cart.addProduct(product, quantity: 1, isFromHome: true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFFE76F51),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text('Add to cart'),
                 ),
               ),
             ],

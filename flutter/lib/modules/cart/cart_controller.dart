@@ -22,7 +22,7 @@ class CartController extends GetxController {
   // double get total =>
   //     lines.fold<double>(0, (sum, line) => sum + line.lineTotal);
 
-  Future<void> addProduct(Product product, {int quantity = 1, bool isIncrement = false}) async {
+  Future<void> addProduct(Product product, {int quantity = 1, bool isIncrement = false, isFromHome = false}) async {
     // final idx = lines.indexWhere((l) => l.product.id == product.id);
 
 
@@ -31,7 +31,8 @@ class CartController extends GetxController {
 
     if (stored.contains(product.id.toString()) && !isIncrement) {
       // print("${product.id} product.id is already in the cart");
-      Get.to(const CartScreen());
+      // print("isFromHome: $isFromHome");
+      isFromHome ? "" : Get.to(const CartScreen());
       return;
     }
     for (var i = 0; i < quantity; i++) {
@@ -39,7 +40,14 @@ class CartController extends GetxController {
     }
     await prefs.setStringList(_cartKey, stored);
     cartItems.assignAll(stored);
-    Get.to(const CartScreen());
+    // print("isFromHome: $isFromHome");
+    isFromHome ? "" : Get.to(const CartScreen());
+
+    Get.snackbar(
+      'Added to cart',
+      product.name,
+      snackPosition: SnackPosition.BOTTOM,
+    );
 
     // final sharedPreferences = await SharedPreferences.getInstance();
     // await sharedPreferences.setString('cart_items', product.name.toString());

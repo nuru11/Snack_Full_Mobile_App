@@ -69,11 +69,11 @@ class CartScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Color(0xFF6B7280)),
                   ),
-                  const SizedBox(height: 14),
-                  FilledButton(
-                    onPressed: () => Get.back(),
-                    child: const Text('Browse menu'),
-                  ),
+                  // const SizedBox(height: 14),
+                  // FilledButton(
+                  //   onPressed: () => Get.back(),
+                  //   child: const Text('Browse menu'),
+                  // ),
                 ],
               ),
             ),
